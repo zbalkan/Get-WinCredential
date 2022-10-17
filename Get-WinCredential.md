@@ -2,7 +2,7 @@
 Module Name: Get-WinCredential
 Module Guid: bde7dbcf-3866-4a8c-bb88-2c259bbb73ac
 Download Help Link: {{ https://raw.githubusercontent.com/zbalkan/Get-WinCredential/master/Get-WinCredential.md }}
-Help Version: {{ 1.0.0.0 }}
+Help Version: {{ 1.0.0.1 }}
 Locale: en-US
 ---
 
