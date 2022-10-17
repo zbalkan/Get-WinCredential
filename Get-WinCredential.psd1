@@ -56,23 +56,23 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        # Tags = @('windows','credential','credential-dialog')
+        Tags = @('windows','credential','credential-dialog')
 
         # A URL to the license for this module.
-        # LicenseUri = 'https://choosealicense.com/licenses/mit/'
+        LicenseUri = 'https://choosealicense.com/licenses/mit/'
 
         # A URL to the main website for this project.
-        # ProjectUri = 'https://github.com/zbalkan/Get-WinCredential'
+        ProjectUri = 'https://github.com/zbalkan/Get-WinCredential'
 
         # ReleaseNotes of this module
-        # ReleaseNotes = 'https://github.com/zbalkan/Get-WinCredential/releases'
+        ReleaseNotes = 'https://github.com/zbalkan/Get-WinCredential/releases'
 
     } # End of PSData hashtable
 
 } # End of PrivateData hashtable
 
 # HelpInfo URI of this module
-# HelpInfoURI = 'https://github.com/zbalkan/Get-WinCredential/blob/master/README.md'
+HelpInfoURI = 'https://github.com/zbalkan/Get-WinCredential/blob/master/Get-WinCredential.md'
 
 }
 
