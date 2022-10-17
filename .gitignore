@@ -352,3 +352,6 @@ MigrationBackup/
 # infer
 */infer-out/
 .infersharpconfig
+
+
+*/Properties/
