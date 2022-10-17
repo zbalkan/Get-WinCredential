@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Management.Automation;
 using System.Reflection.Metadata;
+using System.Windows.Forms;
 
-namespace PowerShellModuleDemo
+namespace GetWinCredential
 {
     /// <summary>
     /// <para type="synopsis">Gets a credential object based on a user name and password.
@@ -98,9 +99,25 @@ namespace PowerShellModuleDemo
 
             try
             {
-                // Original code:
-                // Credential = this.Host.UI.PromptForCredential(_title, _message, _userName, string.Empty);
+                var dialog = new CredentialsDialog(Message, UseModernDialog);
+                DialogResult dialogResult;
+                if (ParameterSetName == credentialSet)
+                {
+                    dialogResult = dialog.Show(Credential.UserName);
+                }
+                else
+                {
+                    dialogResult = dialog.Show(UserName);
+                }
 
+                if (dialogResult != DialogResult.OK)
+                {
+                    Credential = PSCredential.Empty;
+                }
+                else
+                {
+                    Credential = new PSCredential(dialog.UserName, dialog.Password);
+                }
             }
             catch (ArgumentException exception)
             {
