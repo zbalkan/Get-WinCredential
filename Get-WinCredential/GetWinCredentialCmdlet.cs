@@ -35,7 +35,7 @@ namespace GetWinCredential
     ///
     /// supported on select cmdlets, such as the `Get-Content` and `New-PSDrive` cmdlets.</para>
     /// </summary>
-    [Cmdlet(VerbsCommon.Get, "WinCredential", DefaultParameterSetName = GetWinCredentialCmdlet.credentialSet, HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096824")]
+    [Cmdlet(VerbsCommon.Get, "WinCredential", DefaultParameterSetName = GetWinCredentialCmdlet.credentialSet, HelpUri = "")]
     [OutputType(typeof(PSCredential), ParameterSetName = new string[] { GetWinCredentialCmdlet.credentialSet, GetWinCredentialCmdlet.messageSet })]
 
     public class GetWinCredentialCmdlet : PSCmdlet
@@ -66,7 +66,13 @@ namespace GetWinCredential
 
         [Parameter(ParameterSetName = "MessageSet")]
         [Parameter(ParameterSetName = "CredentialSet")]
-        public bool UseModernDialog { get; set; }
+        public SwitchParameter UseModernDialog
+        {
+            get { return _useModernDialog; }
+            set { _useModernDialog = value; }
+        }
+
+        private bool _useModernDialog;
 
         /// <summary>
         /// The Credential parameter set name.
@@ -77,14 +83,6 @@ namespace GetWinCredential
         /// The Message parameter set name.
         /// </summary>
         private const string messageSet = "MessageSet";
-
-        /// <summary>
-        /// Initializes a new instance of the GetWinCredentialCmdlet
-        /// class.
-        /// </summary>
-        public GetWinCredentialCmdlet() : base()
-        {
-        }
 
         /// <summary>
         /// The command outputs the stored PSCredential.
@@ -99,22 +97,9 @@ namespace GetWinCredential
 
             try
             {
-                var dialog = new CredentialsDialog(Message, UseModernDialog);
-                DialogResult dialogResult;
-                if (ParameterSetName == credentialSet)
-                {
-                    dialogResult = dialog.Show(Credential.UserName);
-                }
-                else
-                {
-                    dialogResult = dialog.Show(UserName);
-                }
-
-                if (dialogResult != DialogResult.OK)
-                {
-                    Credential = PSCredential.Empty;
-                }
-                else
+                var dialog = new CredentialsDialog(Message, _useModernDialog);
+                var dialogResult = dialog.Show(UserName);
+                if (dialogResult == DialogResult.OK)
                 {
                     Credential = new PSCredential(dialog.UserName, dialog.Password);
                 }
