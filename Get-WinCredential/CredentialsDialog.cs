@@ -28,7 +28,7 @@ namespace GetWinCredential
             _useModernUI = useModernUI;
             // Keep the default values
             _alwaysDisplay = true;
-            _excludeCertificates = true;
+            _excludeCertificates = false;
             _persist = false;
             _keepName = false;
             _saveChecked = false;
