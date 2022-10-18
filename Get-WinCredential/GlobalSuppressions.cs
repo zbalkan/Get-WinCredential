@@ -5,5 +5,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Roslynator", "RCS1135:Declare enum member with zero value (when enum has FlagsAttribute).", Justification = "No value for 0 in Windows documentation.", Scope = "type", Target = "~T:GetWinCredential.CredentialsDialog.CREDUI.FLAGS_MODERN_UI")]
-[assembly: SuppressMessage("Roslynator", "RCS1135:Declare enum member with zero value (when enum has FlagsAttribute).", Justification = "No value for 0 in Windows documentation.", Scope = "type", Target = "~T:GetWinCredential.CredentialsDialog.CREDUI.FLAGS")]
+[assembly: SuppressMessage("Performance", "U2U1002:Method can be declared static", Justification = "<Pending>", Scope = "member", Target = "~M:GetWinCredential.CredentialsDialog.GetFlagsModernUI~GetWinCredential.CREDUI.FLAGS_MODERN_UI")]

@@ -1,19 +1,27 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 using System.Windows.Forms;
+using GetWinCredential.Pinvoke;
 
 namespace GetWinCredential
 {
-    /// <summary>Encapsulates dialog functionality from the Credential Management API.</summary>
-    public sealed partial class CredentialsDialog
+    /// <summary>
+    ///     Encapsulates dialog functionality from the Credential Management API.
+    /// </summary>
+    public sealed class CredentialsDialog
     {
-        /// <summary>Initializes a new instance of the <see cref="T:CredentialWindow.CredentialsDialog"/> class
-        /// with the specified message.</summary>
-        /// <param name="message">The message of the dialog (null will cause a system default message to be used).</param>
-        /// <param name="useModernUI">Use Vista+ dialog</param>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="T:CredentialWindow.CredentialsDialog"
+        ///     /> class with the specified message.
+        /// </summary>
+        /// <param name="message">
+        ///     The message of the dialog (null will cause a system default message to be used).
+        /// </param>
+        /// <param name="useModernUI"> Use Vista+ dialog </param>
         public CredentialsDialog(string message = "", bool useModernUI = false)
         {
             _target = "PowerShell";
@@ -34,22 +42,38 @@ namespace GetWinCredential
             _saveChecked = false;
             _saveDisplayed = false;
         }
+
         /// <summary>
-        /// Gets or sets if the dialog will be shown even if the credentials
-        /// can be returned from an existing credential in the credential manager.
+        ///     Gets or sets if the dialog will be shown even if the credentials can be returned
+        ///     from an existing credential in the credential manager.
         /// </summary>
         private readonly bool _alwaysDisplay;
-        /// <summary>Gets or sets if the dialog is populated with username/password only.</summary>
+
+        /// <summary>
+        ///     Gets or sets if the dialog is populated with username/password only.
+        /// </summary>
         private readonly bool _excludeCertificates;
-        /// <summary>Gets or sets if the credentials are to be persisted in the credential manager.</summary>
+
+        /// <summary>
+        ///     Gets or sets if the credentials are to be persisted in the credential manager.
+        /// </summary>
         private readonly bool _persist;
-        /// <summary>Gets or sets if the username is read-only.</summary>
+
+        /// <summary>
+        ///     Gets or sets if the username is read-only.
+        /// </summary>
         private readonly bool _keepName;
-        /// <summary>Gets or sets if modern dialog is used or not.</summary>
+
+        /// <summary>
+        ///     Gets or sets if modern dialog is used or not.
+        /// </summary>
         private readonly bool _useModernUI;
 
         private string _name = string.Empty;
-        /// <summary>Gets or sets the username for the credentials.</summary>
+
+        /// <summary>
+        ///     Gets or sets the username for the credentials.
+        /// </summary>
         public string UserName
         {
             get
@@ -72,8 +96,12 @@ namespace GetWinCredential
                 _name = value;
             }
         }
+
         private SecureString _password = null;
-        /// <summary>Gets or sets the password for the credentials.</summary>
+
+        /// <summary>
+        ///     Gets or sets the password for the credentials.
+        /// </summary>
         public SecureString Password
         {
             get
@@ -97,6 +125,7 @@ namespace GetWinCredential
                 _password = value;
             }
         }
+
         private static SecureString ConvertToSecureString(string value)
         {
             var secureString = new SecureString();
@@ -106,16 +135,29 @@ namespace GetWinCredential
             }
             return secureString;
         }
-        /// <summary>Gets or sets if the save checkbox status.</summary>
+
+        /// <summary>
+        ///     Gets or sets if the save checkbox status.
+        /// </summary>
         private bool _saveChecked;
-        /// <summary>Gets or sets if the save checkbox is displayed.</summary>
-        /// <remarks>This value only has effect if _persist is true.</remarks>
+
+        /// <summary>
+        ///     Gets or sets if the save checkbox is displayed.
+        /// </summary>
+        /// <remarks> This value only has effect if _persist is true. </remarks>
         private readonly bool _saveDisplayed;
-        /// <summary>Gets or sets the username of the target for the credentials, typically a server username.</summary>
+
+        /// <summary>
+        ///     Gets or sets the username of the target for the credentials, typically a server username.
+        /// </summary>
         private readonly string _target;
+
         private string _messageValue;
-        /// <summary>Gets or sets the message of the dialog.</summary>
-        /// <remarks>A null value will cause a system default message to be used.</remarks>
+
+        /// <summary>
+        ///     Gets or sets the message of the dialog.
+        /// </summary>
+        /// <remarks> A null value will cause a system default message to be used. </remarks>
         private string Message
         {
             get
@@ -138,9 +180,13 @@ namespace GetWinCredential
                 _messageValue = value;
             }
         }
-        /// <summary>Shows the credentials dialog with the specified owner, username, password and save checkbox status.</summary>
-        /// <param name="username">The username for the credentials.</param>
-        /// <returns>Returns a DialogResult indicating the user action.</returns>
+
+        /// <summary>
+        ///     Shows the credentials dialog with the specified owner, username, password and save
+        ///     checkbox status.
+        /// </summary>
+        /// <param name="username"> The username for the credentials. </param>
+        /// <returns> Returns a DialogResult indicating the user action. </returns>
         public DialogResult Show(string username = "")
         {
             if (string.IsNullOrEmpty(username))
@@ -151,19 +197,25 @@ namespace GetWinCredential
             _saveChecked = false;
             return ShowDialog(null);
         }
-        /// <summary>Returns a DialogResult indicating the user action.</summary>
-        /// <param name="owner">The System.Windows.Forms.IWin32Window the dialog will display in front of.</param>
+
+        /// <summary>
+        ///     Returns a DialogResult indicating the user action.
+        /// </summary>
+        /// <param name="owner">
+        ///     The System.Windows.Forms.IWin32Window the dialog will display in front of.
+        /// </param>
         /// <remarks>
-        /// Sets the username, password and SaveChecked accessors to the state of the dialog as it was dismissed by the user.
+        ///     Sets the username, password and SaveChecked accessors to the state of the dialog as
+        ///     it was dismissed by the user.
         /// </remarks>
         private DialogResult ShowDialog(IWin32Window owner)
         {
-            // set the api call parameters
+            // set the API call parameters
             var name = new StringBuilder(CREDUI.MAX_USERNAME_LENGTH);
             name.Append(UserName);
             var password = new StringBuilder(CREDUI.MAX_PASSWORD_LENGTH);
             var info = GetInfo(owner);
-            // make the api call
+            // make the API call
             if (_useModernUI)
             {
                 uint authPackage = 0;
@@ -187,7 +239,7 @@ namespace GetWinCredential
                     if (CREDUI.CredUnPackAuthenticationBuffer(0, outCredBuffer, outCredSize, name, ref maxUserName,
                             domainBuf, ref maxDomain, password, ref maxPassword))
                     {
-                        //clear the memory allocated by CredUIPromptForWindowsCredentials 
+                        //clear the memory allocated by CredUIPromptForWindowsCredentials
                         CREDUI.CoTaskMemFree(outCredBuffer);
                         SetCredentialsModern(name, password);
                     }
@@ -211,24 +263,34 @@ namespace GetWinCredential
                     ref saveChecked,
                     flags
                 );
-                // set the accessors from the api call parameters
+                // set the accessors from the API call parameters
                 SetCredentials(name, password, saveChecked);
+                SetOnTop(); // For some reason, the window is not shown on top when called from VS code.
                 return GetDialogResult(code);
             }
-            void SetCredentials(StringBuilder n, StringBuilder pw, int save)
-            {
-                UserName = n.ToString();
-                Password = ConvertToSecureString(pw.ToString());
-                _saveChecked = Convert.ToBoolean(save);
-            }
-            void SetCredentialsModern(StringBuilder n, StringBuilder pw)
-            {
-                UserName = n.ToString();
-                Password = ConvertToSecureString(pw.ToString());
-            }
         }
-        /// <summary>Returns the info structure for dialog display settings.</summary>
-        /// <param name="owner">The System.Windows.Forms.IWin32Window the dialog will display in front of.</param>
+
+        private static void SetOnTop() => USER32.SetOntop(Process.GetCurrentProcess().MainWindowHandle);
+
+        private void SetCredentialsModern(StringBuilder n, StringBuilder pw)
+        {
+            UserName = n.ToString();
+            Password = ConvertToSecureString(pw.ToString());
+        }
+
+        private void SetCredentials(StringBuilder n, StringBuilder pw, int save)
+        {
+            UserName = n.ToString();
+            Password = ConvertToSecureString(pw.ToString());
+            _saveChecked = Convert.ToBoolean(save);
+        }
+
+        /// <summary>
+        ///     Returns the info structure for dialog display settings.
+        /// </summary>
+        /// <param name="owner">
+        ///     The System.Windows.Forms.IWin32Window the dialog will display in front of.
+        /// </param>
         private CREDUI.INFO GetInfo(IWin32Window owner)
         {
             var info = new CREDUI.INFO();
@@ -239,12 +301,13 @@ namespace GetWinCredential
             return info;
         }
 
-        /// <summary>Returns the flags for dialog display options.</summary>
+        /// <summary>
+        ///     Returns the flags for dialog display options.
+        /// </summary>
         private CREDUI.FLAGS GetFlags()
         {
             var flags = CREDUI.FLAGS.GENERIC_CREDENTIALS;
-            // grrrr... can't seem to get this to work...
-            // if (incorrectPassword) flags = flags | CredUI.CREDUI_FLAGS.INCORRECT_PASSWORD;
+            // grrrr... can't seem to get this to work... if (incorrectPassword) flags = flags | CredUI.CREDUI_FLAGS.INCORRECT_PASSWORD;
             if (_alwaysDisplay) flags |= CREDUI.FLAGS.ALWAYS_SHOW_UI;
             if (_excludeCertificates) flags |= CREDUI.FLAGS.EXCLUDE_CERTIFICATES;
             if (_persist)
@@ -260,23 +323,30 @@ namespace GetWinCredential
             return flags;
         }
 
-        /// <summary>Returns the flags for modern dialog display options.</summary>
+        /// <summary>
+        ///     Returns the flags for modern dialog display options.
+        /// </summary>
         private CREDUI.FLAGS_MODERN_UI GetFlagsModernUI()
         {
-            // It is possible to improve using the flags but for current implementation, using GENERIC is more than enough.
+            // It is possible to improve using the flags but for current implementation, using
+            // GENERIC is more than enough.
             return CREDUI.FLAGS_MODERN_UI.CREDUIWIN_GENERIC;
         }
 
-        /// <summary>Returns a DialogResult from the specified code.</summary>
-        /// <param name="code">The credential return code.</param>
+        /// <summary>
+        ///     Returns a DialogResult from the specified code.
+        /// </summary>
+        /// <param name="code"> The credential return code. </param>
         private static DialogResult GetDialogResult(CREDUI.ReturnCodes code)
         {
             switch (code)
             {
                 case CREDUI.ReturnCodes.NO_ERROR:
                     return DialogResult.OK;
+
                 case CREDUI.ReturnCodes.ERROR_CANCELLED:
                     return DialogResult.Cancel;
+
                 case CREDUI.ReturnCodes.ERROR_NO_SUCH_LOGON_SESSION:
                     throw new ApplicationException("No such logon session.");
                 case CREDUI.ReturnCodes.ERROR_NOT_FOUND:
@@ -293,16 +363,21 @@ namespace GetWinCredential
                     throw new ApplicationException("Unknown credential result encountered.");
             }
         }
-        /// <summary>Returns a DialogResult from the specified code.</summary>
-        /// <param name="code">The credential return code.</param>
+
+        /// <summary>
+        ///     Returns a DialogResult from the specified code.
+        /// </summary>
+        /// <param name="code"> The credential return code. </param>
         private static DialogResult GetDialogResultModernUI(CREDUI.ReturnCodesModernUI code)
         {
             switch (code)
             {
                 case CREDUI.ReturnCodesModernUI.NO_ERROR:
                     return DialogResult.OK;
+
                 case CREDUI.ReturnCodesModernUI.ERROR_CANCELLED:
                     return DialogResult.Cancel;
+
                 case CREDUI.ReturnCodesModernUI.ERROR_NO_SUCH_LOGON_SESSION:
                     throw new ApplicationException("No such logon session.");
                 case CREDUI.ReturnCodesModernUI.ERROR_NOT_FOUND:
