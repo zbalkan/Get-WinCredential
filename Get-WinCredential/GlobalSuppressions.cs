@@ -5,4 +5,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Performance", "U2U1002:Method can be declared static", Justification = "<Pending>", Scope = "member", Target = "~M:GetWinCredential.CredentialsDialog.GetFlagsModernUI~GetWinCredential.CREDUI.FLAGS_MODERN_UI")]
+[assembly: SuppressMessage("Performance", "U2U1002:Method can be declared static", Justification = "<Pending>", Scope = "member", Target = "~M:GetWinCredential.CredentialsDialog.GetFlagsModernUI~GetWinCredential.Pinvoke.CREDUI.FLAGS_MODERN_UI")]

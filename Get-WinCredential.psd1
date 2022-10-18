@@ -12,7 +12,7 @@
     RootModule         = '.\Get-WinCredential\bin\Release\net6.0-windows\Get-WinCredential.dll'
 
     # Version number of this module.
-    ModuleVersion      = '1.0.1.0'
+    ModuleVersion      = '1.0.2.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()

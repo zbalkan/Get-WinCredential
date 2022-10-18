@@ -195,7 +195,12 @@ namespace GetWinCredential
             }
             UserName = username;
             _saveChecked = false;
-            return ShowDialog(null);
+
+            // Get the owner
+            var owner = new NativeWindow();
+            owner.AssignHandle(Process.GetCurrentProcess().MainWindowHandle);
+
+            return ShowDialog(owner);
         }
 
         /// <summary>
@@ -265,12 +270,9 @@ namespace GetWinCredential
                 );
                 // set the accessors from the API call parameters
                 SetCredentials(name, password, saveChecked);
-                SetOnTop(); // For some reason, the window is not shown on top when called from VS code.
                 return GetDialogResult(code);
             }
         }
-
-        private static void SetOnTop() => USER32.SetOntop(Process.GetCurrentProcess().MainWindowHandle);
 
         private void SetCredentialsModern(StringBuilder n, StringBuilder pw)
         {
