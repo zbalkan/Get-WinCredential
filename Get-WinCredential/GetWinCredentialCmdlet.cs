@@ -29,6 +29,15 @@ namespace GetWinCredential
         public string Message { get; set; }
 
         /// <summary>
+        /// Gets and sets the user supplied title providing description about which script/function is
+        /// requesting the PSCredential from the user.
+        /// </summary>
+        [Parameter(Mandatory = false, ParameterSetName = messageSet)]
+        [Parameter(Mandatory = false, ParameterSetName = messageSetModern)]
+        [ValidateNotNullOrEmpty]
+        public string Title { get; set; }
+
+        /// <summary>
         /// Gets and sets the user supplied username to be used while creating the PSCredential.
         /// </summary>
         [Parameter(Position = 0, Mandatory = false, ParameterSetName = messageSet)]
@@ -72,7 +81,7 @@ namespace GetWinCredential
 
             try
             {
-                var dialog = new CredentialsDialog(Message, _useModernDialog);
+                var dialog = new CredentialsDialog(caption: Title, message: Message, useModernUI: _useModernDialog);
                 var dialogResult = dialog.Show(UserName);
                 if (dialogResult == DialogResult.OK)
                 {

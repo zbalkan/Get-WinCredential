@@ -51,6 +51,8 @@ namespace GetWinCredential
         /// </summary>
         private readonly bool _useModernUI;
 
+        private string _captionValue;
+
         private string _messageValue;
 
         private string _name = string.Empty;
@@ -116,9 +118,9 @@ namespace GetWinCredential
         }
 
         /// <summary>
-        ///     Gets or sets the message of the dialog.
+        ///     Gets or sets the caption of the dialog.
         /// </summary>
-        /// <remarks> A null value will cause a system default message to be used. </remarks>
+        /// <remarks> A null value will cause a system default caption to be used. </remarks>
         private string Message
         {
             get
@@ -133,7 +135,7 @@ namespace GetWinCredential
                     {
                         var message = string.Format(
                             CultureInfo.InvariantCulture,
-                            "The message has a maximum length of {0} characters.",
+                            "The caption has a maximum length of {0} characters.",
                             CREDUI.MAX_MESSAGE_LENGTH);
                         throw new ArgumentException(message, "Message");
                     }
@@ -143,16 +145,53 @@ namespace GetWinCredential
         }
 
         /// <summary>
+        ///     Gets or sets the caption of the dialog.
+        /// </summary>
+        /// <remarks> A null value will cause a default caption to be used. </remarks>
+        private string Caption
+        {
+            get
+            {
+                return _captionValue;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    if (value.Length > CREDUI.MAX_CAPTION_LENGTH)
+                    {
+                        var caption = string.Format(
+                            CultureInfo.InvariantCulture,
+                            "The caption has a maximum length of {0} characters.",
+                            CREDUI.MAX_CAPTION_LENGTH);
+                        throw new ArgumentException(caption, "Caption");
+                    }
+                }
+                _captionValue = value;
+            }
+        }
+
+        /// <summary>
         ///     Initializes a new instance of the <see cref="T:GetWinCredential.CredentialsDialog"
-        ///     /> class with the specified message.
+        ///     /> class with the specified caption.
         /// </summary>
         /// <param name="message">
-        ///     The message of the dialog (null will cause a system default message to be used).
+        ///     The caption of the dialog (null will cause a system default caption to be used).
         /// </param>
         /// <param name="useModernUI"> Use Vista+ dialog </param>
-        public CredentialsDialog(string message = "", bool useModernUI = false)
+        public CredentialsDialog(string caption="", string message = "", bool useModernUI = false)
         {
             _target = "PowerShell";
+
+            if (string.IsNullOrEmpty(caption))
+            {
+                Caption = "Credentials";
+            }
+            else
+            {
+                Caption = caption;
+            }
+
             if (string.IsNullOrEmpty(message))
             {
                 Message = "Enter your credentials.";
@@ -305,7 +344,7 @@ namespace GetWinCredential
         {
             var info = new CREDUI.INFO();
             if (owner != null) info.hwndParent = owner.Handle;
-            info.pszCaptionText = null;
+            info.pszCaptionText = Caption;
             info.pszMessageText = Message;
             info.cbSize = Marshal.SizeOf(info);
             return info;
