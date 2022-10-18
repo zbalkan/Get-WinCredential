@@ -7,7 +7,7 @@ Download Help Link:
       https://raw.githubusercontent.com/zbalkan/Get-WinCredential/master/Get-WinCredential.md,
     },
   }
-Help Version: { { 1.0.0.1 } }
+Help Version: { { 1.0.1.0 } }
 Locale: en-US
 ---
 

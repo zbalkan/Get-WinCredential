@@ -8,71 +8,71 @@
 
 @{
 
-# Script module or binary module file associated with this manifest.
-RootModule = '.\Get-WinCredential\bin\Release\net6.0-windows\Get-WinCredential.dll'
+    # Script module or binary module file associated with this manifest.
+    RootModule         = '.\Get-WinCredential\bin\Release\net6.0-windows\Get-WinCredential.dll'
 
-# Version number of this module.
-ModuleVersion = '1.0.0.1'
+    # Version number of this module.
+    ModuleVersion      = '1.0.1.0'
 
-# Supported PSEditions
-# CompatiblePSEditions = @()
+    # Supported PSEditions
+    # CompatiblePSEditions = @()
 
-# ID used to uniquely identify this module
-GUID = 'bde7dbcf-3866-4a8c-bb88-2c259bbb73ac'
+    # ID used to uniquely identify this module
+    GUID               = 'bde7dbcf-3866-4a8c-bb88-2c259bbb73ac'
 
-# Author of this module
-Author = 'Zafer Balkan'
+    # Author of this module
+    Author             = 'Zafer Balkan'
 
-# Company or vendor of this module
-CompanyName = 'Zafer Balkan'
+    # Company or vendor of this module
+    CompanyName        = 'Zafer Balkan'
 
-# Copyright statement for this module
-Copyright = '(c) Zafer Balkan. All rights reserved.'
+    # Copyright statement for this module
+    Copyright          = '(c) Zafer Balkan. All rights reserved.'
 
-# Description of the functionality provided by this module
-Description = 'Gets a credential object based on a user name and password. It uses Windows native dialogs even on PowerShell 7.x, instead of terminal.'
+    # Description of the functionality provided by this module
+    Description        = 'Gets a credential object based on a user name and password. It uses Windows native dialogs even on PowerShell 7.x, instead of terminal.'
 
-# Minimum version of the PowerShell engine required by this module
-PowerShellVersion = '7.0'
+    # Minimum version of the PowerShell engine required by this module
+    PowerShellVersion  = '7.0'
 
-# Name of the PowerShell host required by this module
-PowerShellHostName = 'ConsoleHost'
+    # Name of the PowerShell host required by this module
+    PowerShellHostName = 'ConsoleHost'
 
-# Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = @()
+    # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
+    FunctionsToExport  = @()
 
-# Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-CmdletsToExport = @("Get-WinCredential")
+    # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
+    CmdletsToExport    = @("Get-WinCredential")
 
-# Variables to export from this module
-VariablesToExport = '*'
+    # Variables to export from this module
+    VariablesToExport  = '*'
 
-# Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
-AliasesToExport = @()
+    # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
+    AliasesToExport    = @()
 
-# Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
-PrivateData = @{
+    # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
+    PrivateData        = @{
 
-    PSData = @{
+        PSData = @{
 
-        # Tags applied to this module. These help with module discovery in online galleries.
-        Tags = @('windows','credential','credential-dialog')
+            # Tags applied to this module. These help with module discovery in online galleries.
+            Tags         = @('windows', 'credential', 'credential-dialog')
 
-        # A URL to the license for this module.
-        LicenseUri = 'https://choosealicense.com/licenses/mit/'
+            # A URL to the license for this module.
+            LicenseUri   = 'https://choosealicense.com/licenses/mit/'
 
-        # A URL to the main website for this project.
-        ProjectUri = 'https://github.com/zbalkan/Get-WinCredential'
+            # A URL to the main website for this project.
+            ProjectUri   = 'https://github.com/zbalkan/Get-WinCredential'
 
-        # ReleaseNotes of this module
-        ReleaseNotes = 'https://github.com/zbalkan/Get-WinCredential/releases'
+            # ReleaseNotes of this module
+            ReleaseNotes = 'https://github.com/zbalkan/Get-WinCredential/releases'
 
-    } # End of PSData hashtable
+        } # End of PSData hashtable
 
-} # End of PrivateData hashtable
+    } # End of PrivateData hashtable
 
-# HelpInfo URI of this module
-HelpInfoURI = 'https://github.com/zbalkan/Get-WinCredential/blob/master/Get-WinCredential.md'
+    # HelpInfo URI of this module
+    HelpInfoURI        = 'https://github.com/zbalkan/Get-WinCredential/blob/master/Get-WinCredential.md'
 
 }
 
