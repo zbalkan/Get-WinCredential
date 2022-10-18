@@ -22,7 +22,7 @@ The help documentation is in `Get-WinCredential.md` file. Refer to `Get-Credenti
 ![Legacy dialog](/assets/legacy.png)
 
 ```powershell
-    # Use modern creential dialog, came after Vista+
+    # Use modern credential dialog, came after Vista+
     $creds = Get-WinCredential -UseModernDialog
 ```
 
