@@ -1,8 +1,13 @@
 ﻿---
 Module Name: Get-WinCredential
 Module Guid: bde7dbcf-3866-4a8c-bb88-2c259bbb73ac
-Download Help Link: {{ https://raw.githubusercontent.com/zbalkan/Get-WinCredential/master/Get-WinCredential.md }}
-Help Version: {{ 1.0.0.1 }}
+Download Help Link:
+  {
+    {
+      https://raw.githubusercontent.com/zbalkan/Get-WinCredential/master/Get-WinCredential.md,
+    },
+  }
+Help Version: { { 1.0.0.1 } }
 Locale: en-US
 ---
 
@@ -14,7 +19,7 @@ Locale: en-US
 
 ## Description
 
-{{ 
+{{
 The `Get-WinCredential` cmdlet creates a credential object for a specified user name and password. You can use the
 credential object in security operations.
 
@@ -24,7 +29,7 @@ that prompts the user for their name and password.
 The `Get-WinCredential` cmdlet prompts the user for a password or a user name and password. By default, an
 authentication dialog box appears to prompt the user. However, in some host programs, such as the PowerShell
 console, you can prompt the user at the command line by changing a registry entry. For more information about this
-registry entry, see the notes and examples. 
+registry entry, see the notes and examples.
 
 This cmdlet aims to be a drop-in alternative to `Get-Credential`. Therefore, parameters and output is exactly the same.
 Except for the new `UseModernDialog` switch which can invoke Vista+ credential dialog.
@@ -39,6 +44,7 @@ The code is based on the [Credential Management API examples by Alan Dean](https
 ```powershell
     $creds = Get-WinCredential
 ```
+
 This command gets a credential object and saves it in the `$creds` variable.
 
 ## Example
@@ -52,10 +58,13 @@ This command gets a credential object and saves it in the `$creds` variable.
 ```powershell
     Get-WinCredential -Message "Type your credentials" -UseModernDialog
 ```
-Umlike `Get-Credential`, you can trigger the modern credentials dialog. 
+
+Unlike `Get-Credential`, you can trigger the modern credentials dialog.
 
 ## Example
 
 ```powershell
-    $creds | Get-WinCredential # Exports $creds as is.
+    $creds | Get-WinCredential
 ```
+
+Exports $creds as is.
