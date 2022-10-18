@@ -2,8 +2,10 @@
 
 Gets a credential object based on a user name and password. It uses Windows native dialogs even on PowerShell 7.x, instead of terminal.
 
-This cmdlet aims to be a drop-in alternative to `Get-Credential`. Therefore, parameters and output is exactly the same.
-Except for the new `UseModernDialog` switch which can invoke Vista+ credential dialog.
+This cmdlet aims to be a drop-in alternative to `Get-Credential`. Therefore, output is exactly the same. New parameters are included as features.
+For instance, the new `UseModernDialog` switch added which can invoke Vista+ credential dialog. However, you cannot pass `Username` parameter as 
+CREDUI API does not allow it. Another feature is the `Title` parameter that enables the user to update the captin. It can be helpful with 
+password management tools like KeePass which matches window title to the password.
 
 The help documentation is in `Get-WinCredential.md` file. Refer to `Get-Credential` documentation for advanced usages.
 
@@ -22,7 +24,7 @@ The help documentation is in `Get-WinCredential.md` file. Refer to `Get-Credenti
 ![Legacy dialog](/assets/legacy.png)
 
 ```powershell
-    # Use modern credential dialog, came after Vista+
+    # Use modern credential dialog, came after Vista+ without a Title defined 
     $creds = Get-WinCredential -UseModernDialog
 ```
 

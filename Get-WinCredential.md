@@ -7,7 +7,7 @@ Download Help Link:
       https://raw.githubusercontent.com/zbalkan/Get-WinCredential/master/Get-WinCredential.md,
     },
   }
-Help Version: { { 1.0.3.0 } }
+Help Version: { { 1.1.0.0 } }
 Locale: en-US
 ---
 
@@ -51,6 +51,12 @@ This command gets a credential object and saves it in the `$creds` variable.
 
 ```powershell
     Get-WinCredential -Message "Type your credentials" -Username "test"
+```
+
+## Example
+
+```powershell
+    Get-WinCredential -Message "Type your credentials" -Username "test" -Title "Creds"
 ```
 
 ## Example
