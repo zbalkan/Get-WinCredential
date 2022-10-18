@@ -5,8 +5,8 @@ using System.Windows.Forms;
 
 namespace GetWinCredential
 {
-    [Cmdlet(VerbsCommon.Get, "WinCredential", DefaultParameterSetName = GetWinCredentialCmdlet.credentialSet, HelpUri = "https://github.com/zbalkan/Get-WinCredential/blob/master/Get-WinCredential.md")]
-    [OutputType(typeof(PSCredential), ParameterSetName = new string[] { GetWinCredentialCmdlet.credentialSet, GetWinCredentialCmdlet.messageSet })]
+    [Cmdlet(VerbsCommon.Get, "WinCredential", DefaultParameterSetName = credentialSet, HelpUri = "https://github.com/zbalkan/Get-WinCredential/blob/master/Get-WinCredential.md")]
+    [OutputType(typeof(PSCredential), ParameterSetName = new string[] { credentialSet, messageSet })]
 
     public class GetWinCredentialCmdlet : PSCmdlet
     {
@@ -24,6 +24,7 @@ namespace GetWinCredential
         /// requesting the PSCredential from the user.
         /// </summary>
         [Parameter(Mandatory = false, ParameterSetName = messageSet)]
+        [Parameter(Mandatory = false, ParameterSetName = messageSetModern)]
         [ValidateNotNullOrEmpty]
         public string Message { get; set; }
 
@@ -34,8 +35,7 @@ namespace GetWinCredential
         [ValidateNotNullOrEmpty()]
         public string UserName { get; set; }
 
-        [Parameter(ParameterSetName = "MessageSet")]
-        [Parameter(ParameterSetName = "CredentialSet")]
+        [Parameter(ParameterSetName = messageSetModern)]
         public SwitchParameter UseModernDialog
         {
             get { return _useModernDialog; }
@@ -53,6 +53,11 @@ namespace GetWinCredential
         /// The Message parameter set name.
         /// </summary>
         private const string messageSet = "MessageSet";
+
+        /// <summary>
+        /// The Modern Message parameter set name.
+        /// </summary>
+        private const string messageSetModern = "MessageSetModern";
 
         /// <summary>
         /// The command outputs the stored PSCredential.
