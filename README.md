@@ -13,6 +13,7 @@ The help documentation is in `Get-WinCredential.md` file. Refer to `Get-Credenti
 
 ```powershell
     # Install module from PowerShell Gallery
+    # Package URL: https://www.powershellgallery.com/packages/Get-WinCredential
     Install-Module Get-WinCredential
 ```
 
